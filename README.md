@@ -17,10 +17,11 @@ Image Block for the [Editor.js](https://editorjs.io).
 
 **Notes**
 
-This Tool requires server-side implementation for the file uploading. See [backend response format](#server-format) for more details.
+This Tool requires server-side implementation for the file uploading. See [backend response format](#server-format) for
+more details.
 
-This Tool is also capable of uploading & displaying video files using the <video> element. To enable this, specify video mime-types via the 'types' config param.
-
+This Tool is also capable of uploading & displaying video files using the <video> element. To enable this, specify video
+mime-types via the 'types' config param.
 
 ## Installation
 
@@ -64,40 +65,49 @@ import ImageTool from '@editorjs/image';
 const ImageTool = window.ImageTool;
 
 var editor = EditorJS({
-  ...
-
-  tools: {
     ...
-    image: {
-      class: ImageTool,
-      config: {
-        endpoints: {
-          byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
-          byUrl: 'http://localhost:8008/fetchUrl', // Your endpoint that provides uploading by Url
-        }
-      }
-    }
-  }
 
-  ...
-});
+        tools
+:
+{
+...
+    image: {
+        class
+
+    :
+        ImageTool,
+            config
+    :
+        {
+            endpoints: {
+                byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
+                    byUrl
+            :
+                'http://localhost:8008/fetchUrl', // Your endpoint that provides uploading by Url
+            }
+        }
+    }
+}
+
+...
+})
+;
 ```
 
 ## Config Params
 
 Image Tool supports these configuration parameters:
 
-| Field | Type     | Description        |
-| ----- | -------- | ------------------ |
-| endpoints | `{byFile: string, byUrl: string}` | Endpoints for file uploading. <br> Contains 2 fields: <br> __byFile__ - for file uploading <br> __byUrl__ - for uploading by URL |
-| field | `string` | (default: `image`) Name of uploaded image field in POST request |
-| types | `string` | (default: `image/*`) Mime-types of files that can be [accepted with file selection](https://github.com/codex-team/ajax#accept-string).|
-| additionalRequestData | `object` | Object with any data you want to send with uploading requests |
-| additionalRequestHeaders | `object` | Object with any custom headers which will be added to request. [See example](https://github.com/codex-team/ajax/blob/e5bc2a2391a18574c88b7ecd6508c29974c3e27f/README.md#headers-object) |
-| captionPlaceholder | `string` | (default: `Caption`) Placeholder for Caption input |
-| buttonContent | `string` | Allows to override HTML content of «Select file» button |
-| uploader | `{{uploadByFile: function, uploadByUrl: function}}` | Optional custom uploading methods. See details below. |
-| actions | `array` | Array with custom actions to show in the tool's settings menu. See details below. |
+| Field                    | Type                                                | Description                                                                                                                                                                             |
+|--------------------------|-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| endpoints                | `{byFile: string, byUrl: string}`                   | Endpoints for file uploading. <br> Contains 2 fields: <br> __byFile__ - for file uploading <br> __byUrl__ - for uploading by URL                                                        |
+| field                    | `string`                                            | (default: `image`) Name of uploaded image field in POST request                                                                                                                         |
+| types                    | `string`                                            | (default: `image/*`) Mime-types of files that can be [accepted with file selection](https://github.com/codex-team/ajax#accept-string).                                                  |
+| additionalRequestData    | `object`                                            | Object with any data you want to send with uploading requests                                                                                                                           |
+| additionalRequestHeaders | `object`                                            | Object with any custom headers which will be added to request. [See example](https://github.com/codex-team/ajax/blob/e5bc2a2391a18574c88b7ecd6508c29974c3e27f/README.md#headers-object) |
+| captionPlaceholder       | `string`                                            | (default: `Caption`) Placeholder for Caption input                                                                                                                                      || buttonContent | `string` | Allows to override HTML content of «Select file» button |
+| uploader                 | `{{uploadByFile: function, uploadByUrl: function}}` | Optional custom uploading methods. See details below.                                                                                                                                   |
+| actions                  | `array`                                             | Array with custom actions to show in the tool's settings menu. See details below.                                                                                                       |
 
 Note that if you don't implement your custom uploader methods, the `endpoints` param is required.
 
@@ -112,6 +122,7 @@ Note that if you don't implement your custom uploader methods, the `endpoints` p
 3. Add background
 
 Add extra setting-buttons by adding them to the `actions`-array in the configuration:
+
 ```js
 actions: [
     {
@@ -126,38 +137,40 @@ actions: [
 ]
 ```
 
-**_NOTE:_**  return value of `action` callback for settings whether action button should be toggled or not is *deprecated*. Consider using `toggle` option instead.
+**_NOTE:_**  return value of `action` callback for settings whether action button should be toggled or not is
+*deprecated*. Consider using `toggle` option instead.
 
 ## Output data
 
 This Tool returns `data` with following format
 
-| Field          | Type      | Description                     |
-| -------------- | --------- | ------------------------------- |
+| Field          | Type      | Description                                                                               |
+|----------------|-----------|-------------------------------------------------------------------------------------------|
 | file           | `object`  | Uploaded file data. Any data got from backend uploader. Always contain the `url` property |
-| caption        | `string`  | image's caption                 |
-| withBorder     | `boolean` | add border to image             |
-| withBackground | `boolean` | need to add background          |
-| stretched      | `boolean` | stretch image to screen's width |
-
+| caption        | `string`  | image's caption                                                                           |
+| alt            | `string`  | image's alt tag                                                                           |
+| withBorder     | `boolean` | add border to image                                                                       |
+| withBackground | `boolean` | need to add background                                                                    |
+| stretched      | `boolean` | stretch image to screen's width                                                           |
 
 ```json
 {
-    "type" : "image",
-    "data" : {
-        "file": {
-            "url" : "https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg"
-        },
-        "caption" : "Roadster // tesla.com",
-        "withBorder" : false,
-        "withBackground" : false,
-        "stretched" : true
-    }
+  "type": "image",
+  "data": {
+    "file": {
+      "url": "https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg"
+    },
+    "caption": "Roadster // tesla.com",
+    "alt": "Tesla roadster",
+    "withBorder": false,
+    "withBackground": false,
+    "stretched": true
+  }
 }
 ```
 
-## Backend response format <a name="server-format"></a>  
-  
+## Backend response format <a name="server-format"></a>
+
 This Tool works by one of the following schemes:
 
 1. Uploading files from the device
@@ -176,18 +189,20 @@ Scenario:
 
 So, you can implement backend for file saving by your own way. It is a specific and trivial task depending on your
 environment and stack.
-  
-The tool executes the request as [`multipart/form-data`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST), with the key as the value of `field`  in configuration.
+
+The tool executes the request
+as [`multipart/form-data`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST), with the key as the value
+of `field`  in configuration.
 
 The response of your uploader **should**  cover the following format:
 
 ```json5
 {
-    "success" : 1,
-    "file": {
-        "url" : "https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg",
-        // ... and any additional fields you want to store, such as width, height, color, extension, etc
-    }
+  "success": 1,
+  "file": {
+    "url": "https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg",
+    // ... and any additional fields you want to store, such as width, height, color, extension, etc
+  }
 }
 ```
 
@@ -204,20 +219,21 @@ Scenario:
 1. User pastes an URL of the image file to the Editor
 2. Editor pass pasted string to the Image Tool
 3. Tool sends it to **your** backend (on `config.endpoints.byUrl` route) via 'url' in request body
-4. Your backend should accept URL, **download and save the original file by passed URL** and return file data with JSON at specified format.
+4. Your backend should accept URL, **download and save the original file by passed URL** and return file data with JSON
+   at specified format.
 5. Image tool shows saved image and stores server answer
-  
+
 The tool executes the request as `application/json` with the following request body:
-  
+
 ```json5
 {
   "url": "<pasted URL from the user>"
   "additionalRequestData": "<additional request data from configuration>"
 }
 ```
-  
-Response of your uploader should be at the same format as described at «[Uploading files from device](#from-device)» section
 
+Response of your uploader should be at the same format as described at «[Uploading files from device](#from-device)»
+section
 
 ### Uploading by drag-n-drop or from Clipboard
 
@@ -228,13 +244,13 @@ You should save it and return the same response format as described above.
 
 As mentioned at the Config Params section, you have an ability to provide own custom uploading methods.
 It is a quite simple: implement `uploadByFile` and `uploadByUrl` methods and pass them via `uploader` config param.
-Both methods must return a Promise that resolves with response in a format that described at the [backend response format](#server-format) section.
+Both methods must return a Promise that resolves with response in a format that described at
+the [backend response format](#server-format) section.
 
-
-| Method         | Arguments | Return value | Description |
-| -------------- | --------- | -------------| ------------|
-| uploadByFile   | `File`    | `{Promise.<{success, file: {url}}>}` | Upload file to the server and return an uploaded image data |
-| uploadByUrl    | `string`  | `{Promise.<{success, file: {url}}>}` | Send URL-string to the server, that should load image by this URL and return an uploaded image data |
+| Method       | Arguments | Return value                         | Description                                                                                         |
+|--------------|-----------|--------------------------------------|-----------------------------------------------------------------------------------------------------|
+| uploadByFile | `File`    | `{Promise.<{success, file: {url}}>}` | Upload file to the server and return an uploaded image data                                         |
+| uploadByUrl  | `string`  | `{Promise.<{success, file: {url}}>}` | Send URL-string to the server, that should load image by this URL and return an uploaded image data |
 
 Example:
 
@@ -242,57 +258,68 @@ Example:
 import ImageTool from '@editorjs/image';
 
 var editor = EditorJS({
-  ...
-
-  tools: {
     ...
+
+        tools
+:
+{
+...
     image: {
-      class: ImageTool,
-      config: {
-        /**
-         * Custom uploader
-         */
-        uploader: {
-          /**
-           * Upload file to the server and return an uploaded image data
-           * @param {File} file - file selected from the device or pasted by drag-n-drop
-           * @return {Promise.<{success, file: {url}}>}
-           */
-          uploadByFile(file){
-            // your own uploading logic here
-            return MyAjax.upload(file).then(() => {
-              return {
-                success: 1,
-                file: {
-                  url: 'https://codex.so/upload/redactor_images/o_80beea670e49f04931ce9e3b2122ac70.jpg',
-                  // any other image data you want to store, such as width, height, color, extension, etc
-                }
-              };
-            });
-          },
+        class
 
-          /**
-           * Send URL-string to the server. Backend should load image by this URL and return an uploaded image data
-           * @param {string} url - pasted image URL
-           * @return {Promise.<{success, file: {url}}>}
-           */
-          uploadByUrl(url){
-            // your ajax request for uploading
-            return MyAjax.upload(file).then(() => {
-              return {
-                success: 1,
-                file: {
-                  url: 'https://codex.so/upload/redactor_images/o_e48549d1855c7fc1807308dd14990126.jpg',,
-                  // any other image data you want to store, such as width, height, color, extension, etc
+    :
+        ImageTool,
+            config
+    :
+        {
+            /**
+             * Custom uploader
+             */
+            uploader: {
+                /**
+                 * Upload file to the server and return an uploaded image data
+                 * @param {File} file - file selected from the device or pasted by drag-n-drop
+                 * @return {Promise.<{success, file: {url}}>}
+                 */
+                uploadByFile(file)
+                {
+                    // your own uploading logic here
+                    return MyAjax.upload(file).then(() => {
+                        return {
+                            success: 1,
+                            file: {
+                                url: 'https://codex.so/upload/redactor_images/o_80beea670e49f04931ce9e3b2122ac70.jpg',
+                                // any other image data you want to store, such as width, height, color, extension, etc
+                            }
+                        };
+                    });
                 }
-              }
-            })
-          }
+            ,
+
+                /**
+                 * Send URL-string to the server. Backend should load image by this URL and return an uploaded image data
+                 * @param {string} url - pasted image URL
+                 * @return {Promise.<{success, file: {url}}>}
+                 */
+                uploadByUrl(url)
+                {
+                    // your ajax request for uploading
+                    return MyAjax.upload(file).then(() => {
+                        return {
+                            success: 1,
+                            file: {
+                                url: 'https://codex.so/upload/redactor_images/o_e48549d1855c7fc1807308dd14990126.jpg',,
+                            // any other image data you want to store, such as width, height, color, extension, etc
+                        }
+                    }
+                    })
+                }
+            }
         }
-      }
     }
-  }
+}
 
-  ...
-});
+...
+})
+;
 ```
