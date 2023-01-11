@@ -34,6 +34,7 @@
  * @typedef {object} ImageToolData
  * @description Image Tool's input and output data format
  * @property {string} caption — image caption
+ * @property {string} alt — image alt data
  * @property {boolean} withBorder - should image be rendered with border
  * @property {boolean} withBackground - should image be rendered with background
  * @property {boolean} stretched - should image be stretched to full width of container
